@@ -13,19 +13,24 @@
 	<version>v1</version>
 	<name>api-call</name>
 	<description>api-system-call</description>
-	<url/>
+	
 	<licenses>
-		<license/>
+		<license>
+			<name>BSD 2-Clause License</name>
+			<url>https://opensource.org/license/bsd-2-clause</url>
+			<distribution>repo</distribution>
+		</license>
 	</licenses>
+
 	<developers>
-		<developer/>
+		<developer>
+			<name>Samuel</name>
+			<url>https://github.com/treeofmapple</url>
+			<organization>Comical Ferret</organization>
+			<organizationUrl>https://github.com/Pato-Incomum</organizationUrl>
+		</developer>
 	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -58,15 +63,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-database-postgresql</artifactId>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
