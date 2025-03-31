@@ -1,0 +1,15 @@
+{
+  "name": "3_reversestring",
+  "version": "v1",
+  "main": "console.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Pogeku",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
