@@ -1,7 +1,7 @@
 {
-  "name": "1_first",
+  "name": "2_repeat",
   "version": "v1",
-  "main": "console.js",
+  "main": "repeatString.js",
   "scripts": {
     "test": "jest"
   },

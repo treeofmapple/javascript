@@ -6,7 +6,6 @@ let value2 = 'two';
 console.log('original', value1);
 console.log('original', value2);
 
-// swapping values
 let value3 = value1;
 value1 = value2;
 value2 = value3;
