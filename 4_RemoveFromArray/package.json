@@ -1,6 +1,5 @@
 {
   "name": "4_removefromarray",
-  "version": "v1",
   "main": "removeFromArray.js",
   "scripts": {
     "test": "jest"
@@ -10,5 +9,7 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.7.0"
-  }
+  },
+  "version": "1.0.0",
+  "description": ""
 }
