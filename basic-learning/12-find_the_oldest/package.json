@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "find_oldest.js",
   "scripts": {
-    "test": "jest"
+    "test": "playwright test"
   },
   "keywords": [],
   "author": "",
@@ -11,5 +11,8 @@
   "description": "",
   "dependencies": {
     "jest": "^29.7.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.1"
   }
 }
