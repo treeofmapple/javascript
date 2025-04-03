@@ -1,15 +1,15 @@
 {
-  "name": "7_tempconversion",
-  "version": "1.0.0",
-  "main": "tempConversion.js",
+  "name": "2_repeat",
+  "main": "repeat_string.js",
   "scripts": {
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pogeku",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "jest": "^29.7.0"
-  }
+  },
+  "version": "v1",
+  "description": ""
 }

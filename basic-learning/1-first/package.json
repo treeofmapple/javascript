@@ -1,15 +1,15 @@
 {
-  "name": "5_sumall",
-  "version": "1.0.0",
-  "main": "sumAll.js",
+  "name": "1_first",
+  "main": "helloworld.js",
   "scripts": {
     "test": "jest"
   },
   "keywords": [],
   "author": "Pogeku",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "jest": "^29.7.0"
-  }
+  },
+  "version": "v1",
+  "description": ""
 }

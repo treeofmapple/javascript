@@ -1,15 +1,15 @@
 {
-  "name": "1_first",
-  "main": "console.js",
+  "name": "7_tempconversion",
+  "version": "v1",
+  "main": "temp_conversion.js",
   "scripts": {
     "test": "jest"
   },
   "keywords": [],
-  "author": "Pogeku",
+  "author": "",
   "license": "ISC",
+  "description": "",
   "devDependencies": {
     "jest": "^29.7.0"
-  },
-  "version": "1.0.0",
-  "description": ""
+  }
 }

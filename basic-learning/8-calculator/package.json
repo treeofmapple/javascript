@@ -1,7 +1,7 @@
 {
-  "name": "6_leapyears",
-  "version": "1.0.0",
-  "main": "leapYears.js",
+  "name": "8_calculator",
+  "version": "v1",
+  "main": "calculator.js",
   "scripts": {
     "test": "jest"
   },

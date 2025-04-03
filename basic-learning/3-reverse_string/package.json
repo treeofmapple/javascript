@@ -1,6 +1,6 @@
 {
-  "name": "2_repeat",
-  "main": "repeatString.js",
+  "name": "3_reversestring",
+  "main": "reverse_string.js",
   "scripts": {
     "test": "jest"
   },
@@ -10,6 +10,6 @@
   "devDependencies": {
     "jest": "^29.7.0"
   },
-  "version": "1.0.0",
+  "version": "v1",
   "description": ""
 }

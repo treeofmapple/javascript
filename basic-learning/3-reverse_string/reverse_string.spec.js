@@ -1,4 +1,4 @@
-const reverseString1 = require('./reverseString');
+const reverseString1 = require('./reverse_string');
 
 describe('reverseString', () => {
     test('reverses single word', () => {

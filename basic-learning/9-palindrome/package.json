@@ -1,9 +1,9 @@
 {
   "name": "9_palindrome",
-  "version": "1.0.0",
+  "version": "v1",
   "main": "palindrome.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

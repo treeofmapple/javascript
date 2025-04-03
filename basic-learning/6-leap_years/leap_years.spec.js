@@ -1,4 +1,4 @@
-const leapYears = require('./leapYears')
+const leapYears = require('./leap_years')
 
 describe('leapYears', () => {
 

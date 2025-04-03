@@ -1,15 +1,15 @@
 {
-  "name": "3_reversestring",
-  "main": "console.js",
+  "name": "5_sumall",
+  "version": "v1",
+  "main": "sum_all.js",
   "scripts": {
     "test": "jest"
   },
   "keywords": [],
   "author": "Pogeku",
   "license": "ISC",
+  "description": "",
   "devDependencies": {
     "jest": "^29.7.0"
-  },
-  "version": "1.0.0",
-  "description": ""
+  }
 }
