@@ -8,17 +8,17 @@
 
 ✅ Learn the core syntax:
 
-- [ ] Variables (let, const, var)
+- [x] Variables (let, const, var)
 
-- [ ] Data types (string, number, boolean, null, undefined, symbol, bigint)
+- [x] Data types (string, number, boolean, null, undefined, symbol, bigint)
 
-- [ ] Operators (+, -, *, /, %, &&, ||, !, ==, ===, !=, !==)
+- [x] Operators (+, -, *, /, %, &&, ||, !, ==, ===, !=, !==)
 
-- [ ] Control flow (if...else, switch, for, while, do...while)
+- [x] Control flow (if...else, switch, for, while, do...while)
 
-- [ ] Functions (regular, arrow functions)
+- [x] Functions (regular, arrow functions)
 
-- [ ] Arrays & Objects (manipulation, methods)
+- [x] Arrays & Objects (manipulation, methods)
 
 
 ### 🔥 2. Intermediate Level
