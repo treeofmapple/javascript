@@ -33,6 +33,7 @@
 	
 	<properties>
 		<java.version>21</java.version>
+		<jjwt-token>0.11.5</jjwt-token> <!-- 0.12.6 -->
 		<mapstruct.version>1.6.2</mapstruct.version>
 		<bucket4j.version>8.10.1</bucket4j.version>
 		<datafaker.version>2.4.2</datafaker.version>
@@ -53,6 +54,23 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- JJWT Token -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jjwt-token}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt-token}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jjwt-token}</version>
 		</dependency>
 		
 		<!-- Bucket4j -->
