@@ -97,8 +97,6 @@
 
 - [ ] Vue.js
 
-- [ ] Svelte
-
 - [ ] Angular
 
 ✅ Key Concepts

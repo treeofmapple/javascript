@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            color: #5a5a5a;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        button {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #game-container,
+        #summary-container {
+            display: none;
+        }
+
+        .question-selection-box {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .question-selection-box:hover {
+            background-color: #f0f8ff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-button {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .option-button:hover {
+            background-color: #e2e6ea;
+        }
+
+        #result-container {
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .summary-item {
+            border-left: 4px solid #ddd;
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+
+        .summary-item.correct-answer {
+            border-left-color: #28a745;
+        }
+
+        .summary-item.incorrect-answer {
+            border-left-color: #dc3545;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Quiz Game</h1>
+        <div id="error-message" class="incorrect" style="display: none;"></div>
+
+        <div id="start-form">
+            <h2>Start a New Game</h2>
+            <form id="user-form">
+                <input type="text" id="username" placeholder="Enter your name" required>
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <button type="submit">Start Game</button>
+            </form>
+        </div>
+
+        <div id="game-container">
+            <p>
+                <strong>Score:</strong> <span id="score">0</span> |
+                <strong>Question:</strong> <span id="question-number">1</span> / <span id="total-questions">10</span>
+            </p>
+            <hr>
+
+            <div id="question-selection-area">
+                <h2 id="selection-header">Choose a question to answer:</h2>
+                <div id="question-list"></div>
+            </div>
+
+            <div id="answer-area" class="hidden">
+                <h2 id="question-text"></h2>
+                <div id="options-container"></div>
+                <button id="submit-answer-btn" disabled>Submit Answer</button>
+            </div>
+
+            <div id="result-container" class="hidden"></div>
+            <button id="next-question-btn" class="hidden">Next Question</button>
+            <hr>
+            <button id="end-game-btn">End Game Manually</button>
+        </div>
+
+        <div id="summary-container">
+            <h2>Game Over!</h2>
+            <p><strong>Final Score:</strong> <span id="final-score"></span></p>
+            <p><strong>Total Answered:</strong> <span id="total-answered"></span></p>
+            <h3>Summary:</h3>
+            <div id="summary-list"></div>
+            <button onclick="window.location.reload()">Play Again</button>
+        </div>
+
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:5000';
+        
+        const elements = {
+            startForm: document.getElementById('start-form'),
+            userForm: document.getElementById('user-form'),
+            gameContainer: document.getElementById('game-container'),
+            summaryContainer: document.getElementById('summary-container'),
+            error: document.getElementById('error-message'),
+
+            score: document.getElementById('score'),
+            questionNumber: document.getElementById('question-number'),
+            totalQuestions: document.getElementById('total-questions'),
+
+            questionSelectionArea: document.getElementById('question-selection-area'),
+            questionList: document.getElementById('question-list'),
+
+            answerArea: document.getElementById('answer-area'),
+            questionText: document.getElementById('question-text'),
+            optionsContainer: document.getElementById('options-container'),
+            submitAnswerBtn: document.getElementById('submit-answer-btn'),
+
+            resultContainer: document.getElementById('result-container'),
+            nextQuestionBtn: document.getElementById('next-question-btn'),
+            endGameBtn: document.getElementById('end-game-btn'),
+
+            finalScore: document.getElementById('final-score'),
+            totalAnswered: document.getElementById('total-answered'),
+            summaryList: document.getElementById('summary-list')
+        };
+
+        // Game State
+        let state = {
+            currentQuestionId: null,
+            selectedAnswer: null,
+            questionCount: 1
+        };
+
+        /**
+         * Shows an error message to the user.
+         */
+        function showError(message) {
+            elements.error.textContent = `Error: ${message}`;
+            elements.error.style.display = 'block';
+        }
+
+        /**
+         * Centralized fetch wrapper to include credentials and handle errors.
+         * The 'credentials: "include"' is VITAL for Flask sessions to work.
+         */
+        async function apiFetch(endpoint, options = {}) {
+            elements.error.style.display = 'none'; // Hide previous errors
+            try {
+                const response = await fetch(`${API_URL}${endpoint}`, {
+                    ...options,
+                    headers: { 'Content-Type': 'application/json', ...options.headers },
+                    credentials: 'include' // IMPORTANT: Sends cookies with requests
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || `Request failed with status ${response.status}`);
+                }
+                return data;
+            } catch (error) {
+                console.error('API Fetch Error:', error);
+                showError(error.message);
+                throw error; // Re-throw to stop subsequent actions
+            }
+        }
+
+        /**
+         * Starts the game by registering the user.
+         */
+        async function startGame(event) {
+            event.preventDefault();
+            const user = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+
+            try {
+                const data = await apiFetch('/start', {
+                    method: 'POST',
+                    body: JSON.stringify({ user, email })
+                });
+
+                if (data.session_active) {
+                    elements.startForm.style.display = 'none';
+                    elements.gameContainer.style.display = 'block';
+                    elements.totalQuestions.textContent = 10; // From your Python code
+                    await selectQuestions();
+                }
+            } catch (error) {
+                // Error is already displayed by apiFetch
+            }
+        }
+
+        /**
+         * Fetches a new batch of questions for the user to choose from.
+         */
+        async function selectQuestions() {
+            // Reset UI for next question
+            elements.questionSelectionArea.classList.remove('hidden');
+            elements.answerArea.classList.add('hidden');
+            elements.resultContainer.classList.add('hidden');
+            elements.nextQuestionBtn.classList.add('hidden');
+            elements.questionList.innerHTML = '';
+            state.currentQuestionId = null;
+            state.selectedAnswer = null;
+
+            try {
+                // Your '/select' endpoint uses POST
+                const questions = await apiFetch('/select', { method: 'POST' });
+
+                questions.forEach(q => {
+                    const div = document.createElement('div');
+                    div.className = 'question-selection-box';
+                    div.textContent = q.question;
+                    div.dataset.qid = q.id;
+                    // Store the full question object in the element for later use
+                    div.questionData = q;
+                    elements.questionList.appendChild(div);
+                });
+            } catch (error) {
+                // Error handling
+            }
+        }
+
+        /**
+         * Handles the user clicking on a question from the list.
+         */
+        function handleQuestionSelection(event) {
+            const selectedBox = event.target.closest('.question-selection-box');
+            if (!selectedBox) return;
+
+            const questionData = selectedBox.questionData;
+            state.currentQuestionId = questionData.id;
+
+            elements.questionSelectionArea.classList.add('hidden');
+            elements.answerArea.classList.remove('hidden');
+
+            elements.questionText.textContent = questionData.question;
+            elements.optionsContainer.innerHTML = '';
+
+            questionData.options.forEach(opt => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = `${opt.number}. ${opt.text}`;
+                button.dataset.answerNumber = opt.number;
+                elements.optionsContainer.appendChild(button);
+            });
+        }
+
+        /**
+         * Handles the user clicking an answer option.
+         */
+        function handleOptionSelection(event) {
+            const selectedButton = event.target.closest('.option-button');
+            if (!selectedButton) return;
+
+            // Reset style of previously selected button
+            Array.from(elements.optionsContainer.children).forEach(btn => {
+                btn.style.fontWeight = 'normal';
+                btn.style.border = '1px solid #ddd';
+            });
+
+            // Highlight selected button
+            selectedButton.style.fontWeight = 'bold';
+            selectedButton.style.border = '2px solid #007bff';
+
+            state.selectedAnswer = parseInt(selectedButton.dataset.answerNumber);
+            elements.submitAnswerBtn.disabled = false;
+        }
+
+        /**
+         * Submits the chosen answer to the backend.
+         */
+        async function submitAnswer() {
+            if (state.selectedAnswer === null || state.currentQuestionId === null) return;
+
+            elements.submitAnswerBtn.disabled = true;
+
+            try {
+                const data = await apiFetch(`/answer/${state.currentQuestionId}`, {
+                    method: 'POST',
+                    body: JSON.stringify({ answer: state.selectedAnswer })
+                });
+
+                displayResult(data);
+
+                if (data.game_over) {
+                    // The /answer route can end the game, response is the final summary
+                    displaySummary(data);
+                } else {
+                    elements.score.textContent = data.current_score;
+                    state.questionCount++;
+                    elements.questionNumber.textContent = state.questionCount;
+                    elements.nextQuestionBtn.classList.remove('hidden');
+                    elements.answerArea.classList.add('hidden');
+                }
+            } catch (error) {
+                elements.submitAnswerBtn.disabled = false; // Re-enable on error
+            }
+        }
+
+        /**
+         * Displays the result of an answer.
+         */
+        function displayResult(data) {
+            elements.resultContainer.classList.remove('hidden');
+            elements.resultContainer.innerHTML = '';
+
+            const resultClass = data.result === 'correct' ? 'correct' : 'incorrect';
+            elements.resultContainer.className = `result-container ${resultClass}`;
+
+            const resultText = document.createElement('strong');
+            resultText.textContent = `Your answer was ${data.result.toUpperCase()}!`;
+
+            const explanation = document.createElement('p');
+            explanation.innerHTML = `<strong>Explanation:</strong> ${data.explanation}`;
+
+            elements.resultContainer.appendChild(resultText);
+            elements.resultContainer.appendChild(explanation);
+        }
+
+        /**
+         * Displays the final game summary.
+         */
+        function displaySummary(data) {
+            elements.gameContainer.style.display = 'none';
+            elements.summaryContainer.style.display = 'block';
+
+            elements.finalScore.textContent = data.final_score;
+            elements.totalAnswered.textContent = data.total_questions_answered;
+            elements.summaryList.innerHTML = '';
+
+            data.summary.forEach(item => {
+                const div = document.createElement('div');
+                const isCorrect = item.your_answer_number === item.correct_answer_number;
+                div.className = isCorrect ? 'summary-item correct-answer' : 'summary-item incorrect-answer';
+
+                div.innerHTML = `
+                <p><strong>Question:</strong> ${item.question}</p>
+                <p>Your Answer: ${item.options[item.user_answer]}</p>
+                <p>Correct Answer: ${item.options[item.correct_answer]}</p>
+            `;
+                elements.summaryList.appendChild(div);
+            });
+        }
+
+        /**
+         * Ends the game prematurely.
+         */
+        async function endGame() {
+            if (!confirm("Are you sure you want to end the game?")) return;
+            try {
+                // Your /end endpoint uses POST
+                const data = await apiFetch('/end', { method: 'POST' });
+                displaySummary(data);
+            } catch (error) {
+                // Error handling
+            }
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            elements.userForm.addEventListener('submit', startGame);
+            elements.questionList.addEventListener('click', handleQuestionSelection);
+            elements.optionsContainer.addEventListener('click', handleOptionSelection);
+            elements.submitAnswerBtn.addEventListener('click', submitAnswer);
+            elements.nextQuestionBtn.addEventListener('click', selectQuestions);
+            elements.endGameBtn.addEventListener('click', endGame);
+        });
+
+    </script>
+</body>
+
+</html>
