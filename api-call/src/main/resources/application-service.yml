@@ -1,9 +1,0 @@
-application:
-  cors:
-    time: 300
-    allowed-origins: "http://localhost:3000"
-  security:
-    secret-key: ${SECURITY_KEY}
-    expiration: ${EXPIRATION_KEY:15M}
-    refresh-token:
-      expiration: ${REFRESH_KEY:7D}
